@@ -42,6 +42,28 @@ git remote add origin  <remote_url>
 git checkout branch <branch_name> # It will create and will change your branch name
 ```
 
+# About the Users
+**User:** The entities are going to use it.
+
+## Types of users
+1. Admin
+2. User
+
+### Roles of Admin
+- Create the problem with testcases, code snippets, reference-solutions
+
+- with judge zero : validate questions with testcases after the validation submit to database
+
+### Roles of user
+- Read, attempt the problem 
+- Write code in compiler and submit
+- Execute-code
+- The code written by user is going to be validated by comparing the results of the test cases of the user'code with the test case of the problems in the database 
+- if the code executed correctly and matched with all test cases matched 
+
+
+
+
 # Leetlab Tasks
 
 -- Bug Fixes
