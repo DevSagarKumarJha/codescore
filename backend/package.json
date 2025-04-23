@@ -1,7 +1,7 @@
 {
-  "name": "leetlab",
+  "name": "leetlab-project",
   "version": "1.0.0",
-  "description": "LeetLab Practice",
+  "description": "Leetcode practice project",
   "license": "ISC",
   "author": "Sagar Kumar Jha",
   "type": "module",
