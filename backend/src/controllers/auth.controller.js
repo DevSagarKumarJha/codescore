@@ -61,24 +61,107 @@ const register = async (req, res) => {
 
     res.status(201).json({
       message: "User created successfully",
+      success: true,
       user: {
         id: newUser.id,
         email: newUser.email,
-        name:newUser.name,
-        role:newUser.role,
-        image:newUser.image
-      }
-    })
+        name: newUser.name,
+        role: newUser.role,
+        image: newUser.image,
+      },
+    });
   } catch (error) {
-    console.log("Error creating user: ", error)
+    console.log("Error creating user: ", error);
     res.status(500).json({
       error: "Error user registeration",
-    })
+    });
   }
 };
-const login = async (req, res) => {};
-const logout = async (req, res) => {};
-const getMe = async (req, res) => {};
-const check = async (req, res) => {};
+const login = async (req, res) => {
+  const { email, password } = req.body;
 
-export { register, login, logout, check, getMe };
+  try {
+    const user = await db.user.findUnique({
+      where: {
+        email,
+      },
+    });
+
+    if (!user) {
+      return res.status(401).json({
+        error: "User not found",
+      });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.status(401).json({
+        error: "Invalid credentials",
+      });
+    }
+
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+      expiresIn: "7d",
+    });
+
+    res.cookie("jwt", token, {
+      httpOnly: true,
+      sameSite: "strict",
+      secure: process.env.NODE_ENV !== "development",
+      maxAge: 1000 * 60 * 60 * 24 * 7,
+    });
+
+    res.status(200).json({
+      message: "User login successfully",
+      success: true,
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        role: user.role,
+        image: user.image,
+      },
+    });
+  } catch (error) {
+    console.log("Error login user: ", error);
+    res.status(500).json({
+      error: "Error user login",
+    });
+  }
+};
+const logout = async (req, res) => {
+  try {
+    res.clearCookie("jwt", {
+      httpOnly:true,
+      sameSite: "strict",
+      secure : process.env.NODE_ENV !== "development",
+    })
+
+    res.status(200).json({
+      message: "User logout successfully",
+      success: true,
+    });
+  } catch (error) {
+    console.log("Error logout user: ", error);
+    res.status(500).json({
+      error: "Error user login",
+    });
+  }
+};
+const check = async (req, res) => {
+  try {
+    res.status(200).json({
+      success: true,
+      message: "User authenticated successfully",
+      user: req.user
+    })
+  } catch (error) {
+    console.log("Error check user: ", error);
+    res.status(500).json({
+      error: "Error user check",
+    });
+  }
+};
+
+export { register, login, logout, check };
