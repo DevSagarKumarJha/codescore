@@ -1,6 +1,5 @@
 import jwt from "jsonwebtoken";
 
-
 import { db } from "../libs/db.js";
 
 export const authMiddleware = async (req, res, next) => {
@@ -37,12 +36,34 @@ export const authMiddleware = async (req, res, next) => {
     });
 
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ error: "User not found" });
     }
     req.user = user;
     next();
-} catch (error) {
+  } catch (error) {
     console.log("Error authenticating user: ", error);
-    return res.status(500).json({ message: "Error authenticating user" });
+    return res.status(500).json({ error: "Error authenticating user" });
+  }
+};
+
+export const checkAdmin = async (req, res, next) => {
+  const userId = req.user.id;
+  try {
+    const user = await db.user.findUnique({
+      where: {
+        id: userId,
+      },
+      select: { role: true },
+    });
+
+    if (!user || user.role !== "ADMIN") {
+      return res.status(403).json({ error: "Access denied - Admins only" });
+    }
+
+    next();
+  } catch (error) {
+    console.log("Error checking Admin: ", error);
+
+    return res.status(500).json({ error: "Internal server error" });
   }
 };
