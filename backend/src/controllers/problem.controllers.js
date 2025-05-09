@@ -170,7 +170,30 @@ const deleteProblem = asyncHandler(async (req, res) => {
 });
 
 // Placeholder for future implementation
-const getProblemSolvedByUser = asyncHandler((req, res) => {});
+const getProblemSolvedByUser = asyncHandler(async (req, res) => {
+  const problems = await db.problem.findMany({
+    where:{
+      solvedBy:{
+        some:{
+          userId:req.user.id
+        }
+      }
+    },
+    include:{
+      solvedBy:{
+        where:{
+          userId:req.user.id
+        }
+      }
+    }
+  })
+
+  res.status(200).json({
+    success:true,
+    message:"Problems fetched successfully",
+    problems
+  })
+});
 
 export {
   getAllProblems,
