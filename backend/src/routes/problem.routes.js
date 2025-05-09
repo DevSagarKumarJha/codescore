@@ -8,7 +8,7 @@ import {
   getProblemByID,
   getProblemSolvedByUser,
   updateProblem,
-} from "../controllers/problem.controllers.js";
+} from "../controllers/problem.controller.js";
 
 const problemRoutes = express.Router();
 
