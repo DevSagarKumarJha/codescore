@@ -1,7 +1,7 @@
 import { db } from "../libs/db.js";
 import {
   getJudge0LanguageId,
-  pollBatchresults,
+  pollBatchResults,
   submitBatch,
 } from "../libs/judge0.lib.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
@@ -27,7 +27,7 @@ const validateSubmission = async (testcases, referenceSolutions) => {
 
     const tokens = submissionResults.map((res) => res.token);
 
-    const results = await pollBatchresults(tokens);
+    const results = await pollBatchResults(tokens);
 
     for (let i = 0; i < results.length; i++) {
       const result = results[i];

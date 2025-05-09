@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser"
 import authRoutes from "./routes/auth.routes.js";
 import problemRoutes from "./routes/problem.routes.js";
 import { errorHandler } from "./middleware/errorHandler.middleware.js";
+import executionRoutes from "./routes/executeCode.routes.js";
 
 
 const app = express();
@@ -18,6 +19,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/problem", problemRoutes);
+app.use("/api/v1/execute-code", executionRoutes);
 
 app.use(errorHandler);
 

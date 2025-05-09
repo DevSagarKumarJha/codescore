@@ -6,6 +6,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 export const authMiddleware = asyncHandler(async (req, res, next) => {
   const token = req.cookies.jwt;
 
+
   if (!token) {
     return res.status(401).json({
       message: "Unauthorized - No token provided",
