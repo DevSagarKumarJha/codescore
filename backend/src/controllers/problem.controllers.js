@@ -28,6 +28,7 @@ const validateSubmission = async (testcases, referenceSolutions) => {
     const tokens = submissionResults.map((res) => res.token);
 
     const results = await pollBatchresults(tokens);
+
     for (let i = 0; i < results.length; i++) {
       const result = results[i];
       if (result.status.id !== 3) {
@@ -105,6 +106,7 @@ const getProblemByID = asyncHandler(async (req, res) => {
 
 const updateProblem = asyncHandler(async (req, res) => {
   const { id } = req.params;
+
   const {
     title,
     description,
@@ -168,7 +170,7 @@ const deleteProblem = asyncHandler(async (req, res) => {
 });
 
 // Placeholder for future implementation
-const getProblemSolvedByUser = (req, res) => {};
+const getProblemSolvedByUser = asyncHandler((req, res) => {});
 
 export {
   getAllProblems,
