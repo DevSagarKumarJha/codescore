@@ -1,0 +1,1 @@
+// "const readline = require('readline');\nconst r1 = readline.createInterface({\n  input: process.stdin,\n  output: process.stdout\n});\nr1.on('line', (line) => { const n = parseInt(line);\n  if (n === 0) {\n    console.log('zero');\n  }\n  else if(n>0){\n    console.log('positive');\n  }\n  else{\n    console.log('negative');\n  }\n  r1.close();\n});\n"
