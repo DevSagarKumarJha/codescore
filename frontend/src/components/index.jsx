@@ -1,1 +1,1 @@
-export { HomePage, SignUpPage, LoginPage } from "./pages";
+export {default as AuthImagePattern} from "./AuthImagePattern.jsx"

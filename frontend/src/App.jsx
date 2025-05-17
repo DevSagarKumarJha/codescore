@@ -1,15 +1,15 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import { HomePage, LoginPage, SignUpPage } from "./components";
+import { HomePage, LoginPage, SignUpPage } from "./pages";
 
 const App = () => {
-  let authUser = "sagar";
+  let authUser = null;
 
   return (
-    <div className="flex flex-col-items-center justify-start">
+    <div className="flex flex-col items-center justify-start">
       <Routes>
         <Route
           path="/"
-          element={authUser ? <HomePage /> : <Navigate to={"/login"} />}
+          element={authUser ? <HomePage /> : <Navigate to={"/signin"} />}
         />
         <Route
           path="/signup"
