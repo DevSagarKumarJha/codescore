@@ -9,8 +9,16 @@ import { db } from "../libs/db.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/api-error.js";
 import { ApiResponse } from "../utils/api-response.js";
-import { generateAccessToken, generateRefreshToken, setEmailVerificationToken } from "../utils/auth-utils.js";
-import { emailVerificationMailgenContent, forgotPasswordMailgenContent, sendEmail } from "../utils/mail.js";
+import {
+  generateAccessToken,
+  generateRefreshToken,
+  setEmailVerificationToken,
+} from "../utils/auth-utils.js";
+import {
+  emailVerificationMailgenContent,
+  forgotPasswordMailgenContent,
+  sendEmail,
+} from "../utils/mail.js";
 
 const register = asyncHandler(async (req, res) => {
   const { name, username, email, password, cnfPassword } = req.body;
@@ -105,7 +113,7 @@ const register = asyncHandler(async (req, res) => {
     .json(response);
 });
 
-const verifyEmail = asyncHandler(async (req, res)=>{
+const verifyEmail = asyncHandler(async (req, res) => {
   const token = req.params.token;
 
   const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
@@ -134,14 +142,13 @@ const verifyEmail = asyncHandler(async (req, res)=>{
 
   const response = new ApiResponse(200, "Email verified successfully");
   res.status(200).json(response);
-})
-
-
+});
 
 const resendVerificationMail = asyncHandler(async (req, res) => {
   const refreshToken = req.cookies?.refreshToken;
 
-  if(!refreshToken) throw new ApiError(401, "Please Login before verifying email");
+  if (!refreshToken)
+    throw new ApiError(401, "Please Login before verifying email");
 
   let decoded;
 
@@ -154,7 +161,6 @@ const resendVerificationMail = asyncHandler(async (req, res) => {
   const user = await db.user.findUnique({
     where: { id: decoded.id },
   });
-
 
   if (!user) {
     throw new ApiError(404, "User not found");
@@ -180,7 +186,6 @@ const resendVerificationMail = asyncHandler(async (req, res) => {
   const response = new ApiResponse(200, "Verification mail sent successfully");
   res.status(200).json(response);
 });
-
 
 const forgotPassword = asyncHandler(async (req, res) => {
   const { email } = req.body;
@@ -272,17 +277,21 @@ const login = asyncHandler(async (req, res) => {
   if (!user) throw new ApiError(401, "User not found");
 
   const isMatch = await bcrypt.compare(password, user.password);
+
   if (!isMatch) throw new ApiError(401, "Invalid credentials");
 
-  const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-    expiresIn: "7d",
+  const accessToken = generateAccessToken({
+    id: user.id,
+    email: user.email,
+    username: user.username,
   });
 
-  res.cookie("jwt", token, {
-    httpOnly: true,
-    sameSite: "strict",
-    secure: process.env.NODE_ENV !== "development",
-    maxAge: 1000 * 60 * 60 * 24 * 7,
+  const refreshToken = generateRefreshToken({ id: user.id });
+
+  // Optionally store refresh token in DB
+  await prisma.user.update({
+    where: { id: user.id },
+    data: { refreshToken },
   });
 
   const response = new ApiResponse(200, "User logged in successfully", {
@@ -295,17 +304,70 @@ const login = asyncHandler(async (req, res) => {
     },
   });
 
-  res.status(response.statusCode).json(response);
+  res
+    .status(response.statusCode)
+    .cookie("accessToken", accessToken, {
+      httpOnly: true,
+      sameSite: "strict",
+      secure: process.env.NODE_ENV === "production",
+    })
+    .cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      sameSite: "strict",
+      secure: process.env.NODE_ENV === "production",
+    })
+    .json(response);
 });
 
 const logout = asyncHandler(async (req, res) => {
-  res.clearCookie("jwt", {
+  const refreshToken = req.cookies?.refreshToken;
+
+  if (!refreshToken) {
+    return res.status(200).json(new ApiResponse(200, "User logged out"));
+  }
+
+  try {
+    // Decode token to get user ID
+    const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+
+    // Remove refresh token from DB
+    await db.user.update({
+      where: { id: decoded.id },
+      data: { refreshToken: null },
+    });
+  } catch (error) {
+    // Token might be invalid/expired — we silently continue to clear cookies
+    console.error("Logout error:", error.message);
+  }
+
+  // Clear access and refresh tokens from cookies
+  res.clearCookie("accessToken", {
+    httpOnly: true,
+    sameSite: "strict",
+    secure: process.env.NODE_ENV !== "development",
+  });
+
+  res.clearCookie("refreshToken", {
     httpOnly: true,
     sameSite: "strict",
     secure: process.env.NODE_ENV !== "development",
   });
 
   const response = new ApiResponse(200, "User logged out successfully");
+  res.status(response.statusCode).json(response);
+});
+
+const getProfile = asyncHandler(async (req, res) => {
+  const userId = params;
+
+  const user = await db.user.findFirst({
+    where:{id: userId}
+  })
+
+  const response = new ApiResponse(200, "User profile fetched successfully", {
+    user,
+  });
+
   res.status(response.statusCode).json(response);
 });
 
@@ -316,4 +378,14 @@ const check = asyncHandler(async (req, res) => {
   res.status(response.statusCode).json(response);
 });
 
-export { register, verifyEmail, resendVerificationMail, forgotPassword, resetPassword, login, logout, check };
+export {
+  register,
+  verifyEmail,
+  resendVerificationMail,
+  forgotPassword,
+  resetPassword,
+  login,
+  logout,
+  getProfile,
+  check,
+};

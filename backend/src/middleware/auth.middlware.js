@@ -1,46 +1,43 @@
 import jwt from "jsonwebtoken";
-
 import { db } from "../libs/db.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
 export const authMiddleware = asyncHandler(async (req, res, next) => {
-  const token = req.cookies.jwt;
-
+  const token = req.cookies?.accessToken;
 
   if (!token) {
     return res.status(401).json({
-      message: "Unauthorized - No token provided",
+      message: "Unauthorized - No access token provided",
     });
   }
-
-  let decoded;
 
   try {
-    decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+
+    const user = await db.user.findUnique({
+      where: {
+        id: decoded.id,
+      },
+      select: {
+        id: true,
+        image: true,
+        name: true,
+        email: true,
+        role: true,
+      },
+    });
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    req.user = user;
+    next();
   } catch (error) {
     return res.status(401).json({
-      message: "Unauthorized - Invalid token",
+      message: "Unauthorized - Invalid or expired access token",
     });
   }
-
-  const user = await db.user.findUnique({
-    where: {
-      id: decoded.id,
-    },
-    select: {
-      id: true,
-      image: true,
-      name: true,
-      email: true,
-      role: true,
-    },
-  });
-
-  if (!user) {
-    return res.status(404).json({ error: "User not found" });
-  }
-  req.user = user;
-  next();
 });
 
 export const checkAdmin = asyncHandler(async (req, res, next) => {

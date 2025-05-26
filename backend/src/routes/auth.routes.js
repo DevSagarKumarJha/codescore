@@ -1,6 +1,7 @@
 import express from "express";
 import {
   check,
+  getProfile,
   login,
   logout,
   register,
@@ -13,10 +14,11 @@ const authRoutes = express.Router();
 
 authRoutes.route("/register").post(register);
 authRoutes.route("/verify/:token").post(verifyEmail);
-authRoutes.route("/resend-verification-mail").post(resendVerificationMail);
+authRoutes.route("/resend-verification-mail").post(authMiddleware, resendVerificationMail);
 authRoutes.route("/login").post(login);
 authRoutes.route("/logout").post(authMiddleware, logout);
 // authRoutes.route("/me").get(getMe);
 authRoutes.route("/check").get(authMiddleware, check);
+authRoutes.route("/profile").get(authMiddleware, getProfile);
 
 export default authRoutes;
