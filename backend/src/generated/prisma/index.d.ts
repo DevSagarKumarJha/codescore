@@ -1626,13 +1626,13 @@ export namespace Prisma {
   }
 
   export type UserAvgAggregateOutputType = {
-    Score: Decimal | null
-    Streak: number | null
+    score: Decimal | null
+    streak: number | null
   }
 
   export type UserSumAggregateOutputType = {
-    Score: Decimal | null
-    Streak: number | null
+    score: Decimal | null
+    streak: number | null
   }
 
   export type UserMinAggregateOutputType = {
@@ -1643,13 +1643,13 @@ export namespace Prisma {
     image: string | null
     role: $Enums.UserRole | null
     password: string | null
-    Score: Decimal | null
+    score: Decimal | null
     isEmailVerified: boolean | null
     emailVerificationToken: string | null
     emailVerificationTokenExpires: Date | null
     passwordResetToken: string | null
     passwordResetTokenExpires: Date | null
-    Streak: number | null
+    streak: number | null
     refreshToken: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -1663,13 +1663,13 @@ export namespace Prisma {
     image: string | null
     role: $Enums.UserRole | null
     password: string | null
-    Score: Decimal | null
+    score: Decimal | null
     isEmailVerified: boolean | null
     emailVerificationToken: string | null
     emailVerificationTokenExpires: Date | null
     passwordResetToken: string | null
     passwordResetTokenExpires: Date | null
-    Streak: number | null
+    streak: number | null
     refreshToken: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -1683,13 +1683,13 @@ export namespace Prisma {
     image: number
     role: number
     password: number
-    Score: number
+    score: number
     isEmailVerified: number
     emailVerificationToken: number
     emailVerificationTokenExpires: number
     passwordResetToken: number
     passwordResetTokenExpires: number
-    Streak: number
+    streak: number
     refreshToken: number
     createdAt: number
     updatedAt: number
@@ -1698,13 +1698,13 @@ export namespace Prisma {
 
 
   export type UserAvgAggregateInputType = {
-    Score?: true
-    Streak?: true
+    score?: true
+    streak?: true
   }
 
   export type UserSumAggregateInputType = {
-    Score?: true
-    Streak?: true
+    score?: true
+    streak?: true
   }
 
   export type UserMinAggregateInputType = {
@@ -1715,13 +1715,13 @@ export namespace Prisma {
     image?: true
     role?: true
     password?: true
-    Score?: true
+    score?: true
     isEmailVerified?: true
     emailVerificationToken?: true
     emailVerificationTokenExpires?: true
     passwordResetToken?: true
     passwordResetTokenExpires?: true
-    Streak?: true
+    streak?: true
     refreshToken?: true
     createdAt?: true
     updatedAt?: true
@@ -1735,13 +1735,13 @@ export namespace Prisma {
     image?: true
     role?: true
     password?: true
-    Score?: true
+    score?: true
     isEmailVerified?: true
     emailVerificationToken?: true
     emailVerificationTokenExpires?: true
     passwordResetToken?: true
     passwordResetTokenExpires?: true
-    Streak?: true
+    streak?: true
     refreshToken?: true
     createdAt?: true
     updatedAt?: true
@@ -1755,13 +1755,13 @@ export namespace Prisma {
     image?: true
     role?: true
     password?: true
-    Score?: true
+    score?: true
     isEmailVerified?: true
     emailVerificationToken?: true
     emailVerificationTokenExpires?: true
     passwordResetToken?: true
     passwordResetTokenExpires?: true
-    Streak?: true
+    streak?: true
     refreshToken?: true
     createdAt?: true
     updatedAt?: true
@@ -1862,13 +1862,13 @@ export namespace Prisma {
     image: string | null
     role: $Enums.UserRole
     password: string
-    Score: Decimal
+    score: Decimal
     isEmailVerified: boolean
     emailVerificationToken: string | null
     emailVerificationTokenExpires: Date | null
     passwordResetToken: string | null
     passwordResetTokenExpires: Date | null
-    Streak: number
+    streak: number
     refreshToken: string | null
     createdAt: Date
     updatedAt: Date
@@ -1901,13 +1901,13 @@ export namespace Prisma {
     image?: boolean
     role?: boolean
     password?: boolean
-    Score?: boolean
+    score?: boolean
     isEmailVerified?: boolean
     emailVerificationToken?: boolean
     emailVerificationTokenExpires?: boolean
     passwordResetToken?: boolean
     passwordResetTokenExpires?: boolean
-    Streak?: boolean
+    streak?: boolean
     refreshToken?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -1926,13 +1926,13 @@ export namespace Prisma {
     image?: boolean
     role?: boolean
     password?: boolean
-    Score?: boolean
+    score?: boolean
     isEmailVerified?: boolean
     emailVerificationToken?: boolean
     emailVerificationTokenExpires?: boolean
     passwordResetToken?: boolean
     passwordResetTokenExpires?: boolean
-    Streak?: boolean
+    streak?: boolean
     refreshToken?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -1946,13 +1946,13 @@ export namespace Prisma {
     image?: boolean
     role?: boolean
     password?: boolean
-    Score?: boolean
+    score?: boolean
     isEmailVerified?: boolean
     emailVerificationToken?: boolean
     emailVerificationTokenExpires?: boolean
     passwordResetToken?: boolean
     passwordResetTokenExpires?: boolean
-    Streak?: boolean
+    streak?: boolean
     refreshToken?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -1966,19 +1966,19 @@ export namespace Prisma {
     image?: boolean
     role?: boolean
     password?: boolean
-    Score?: boolean
+    score?: boolean
     isEmailVerified?: boolean
     emailVerificationToken?: boolean
     emailVerificationTokenExpires?: boolean
     passwordResetToken?: boolean
     passwordResetTokenExpires?: boolean
-    Streak?: boolean
+    streak?: boolean
     refreshToken?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "username" | "email" | "image" | "role" | "password" | "Score" | "isEmailVerified" | "emailVerificationToken" | "emailVerificationTokenExpires" | "passwordResetToken" | "passwordResetTokenExpires" | "Streak" | "refreshToken" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "username" | "email" | "image" | "role" | "password" | "score" | "isEmailVerified" | "emailVerificationToken" | "emailVerificationTokenExpires" | "passwordResetToken" | "passwordResetTokenExpires" | "streak" | "refreshToken" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     problems?: boolean | User$problemsArgs<ExtArgs>
     submission?: boolean | User$submissionArgs<ExtArgs>
@@ -2005,13 +2005,13 @@ export namespace Prisma {
       image: string | null
       role: $Enums.UserRole
       password: string
-      Score: Prisma.Decimal
+      score: Prisma.Decimal
       isEmailVerified: boolean
       emailVerificationToken: string | null
       emailVerificationTokenExpires: Date | null
       passwordResetToken: string | null
       passwordResetTokenExpires: Date | null
-      Streak: number
+      streak: number
       refreshToken: string | null
       createdAt: Date
       updatedAt: Date
@@ -2449,13 +2449,13 @@ export namespace Prisma {
     readonly image: FieldRef<"User", 'String'>
     readonly role: FieldRef<"User", 'UserRole'>
     readonly password: FieldRef<"User", 'String'>
-    readonly Score: FieldRef<"User", 'Decimal'>
+    readonly score: FieldRef<"User", 'Decimal'>
     readonly isEmailVerified: FieldRef<"User", 'Boolean'>
     readonly emailVerificationToken: FieldRef<"User", 'String'>
     readonly emailVerificationTokenExpires: FieldRef<"User", 'DateTime'>
     readonly passwordResetToken: FieldRef<"User", 'String'>
     readonly passwordResetTokenExpires: FieldRef<"User", 'DateTime'>
-    readonly Streak: FieldRef<"User", 'Int'>
+    readonly streak: FieldRef<"User", 'Int'>
     readonly refreshToken: FieldRef<"User", 'String'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
@@ -9879,13 +9879,13 @@ export namespace Prisma {
     image: 'image',
     role: 'role',
     password: 'password',
-    Score: 'Score',
+    score: 'score',
     isEmailVerified: 'isEmailVerified',
     emailVerificationToken: 'emailVerificationToken',
     emailVerificationTokenExpires: 'emailVerificationTokenExpires',
     passwordResetToken: 'passwordResetToken',
     passwordResetTokenExpires: 'passwordResetTokenExpires',
-    Streak: 'Streak',
+    streak: 'streak',
     refreshToken: 'refreshToken',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -10166,13 +10166,13 @@ export namespace Prisma {
     image?: StringNullableFilter<"User"> | string | null
     role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
     password?: StringFilter<"User"> | string
-    Score?: DecimalFilter<"User"> | Decimal | DecimalJsLike | number | string
+    score?: DecimalFilter<"User"> | Decimal | DecimalJsLike | number | string
     isEmailVerified?: BoolFilter<"User"> | boolean
     emailVerificationToken?: StringNullableFilter<"User"> | string | null
     emailVerificationTokenExpires?: DateTimeNullableFilter<"User"> | Date | string | null
     passwordResetToken?: StringNullableFilter<"User"> | string | null
     passwordResetTokenExpires?: DateTimeNullableFilter<"User"> | Date | string | null
-    Streak?: IntFilter<"User"> | number
+    streak?: IntFilter<"User"> | number
     refreshToken?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
@@ -10190,13 +10190,13 @@ export namespace Prisma {
     image?: SortOrderInput | SortOrder
     role?: SortOrder
     password?: SortOrder
-    Score?: SortOrder
+    score?: SortOrder
     isEmailVerified?: SortOrder
     emailVerificationToken?: SortOrderInput | SortOrder
     emailVerificationTokenExpires?: SortOrderInput | SortOrder
     passwordResetToken?: SortOrderInput | SortOrder
     passwordResetTokenExpires?: SortOrderInput | SortOrder
-    Streak?: SortOrder
+    streak?: SortOrder
     refreshToken?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -10217,13 +10217,13 @@ export namespace Prisma {
     image?: StringNullableFilter<"User"> | string | null
     role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
     password?: StringFilter<"User"> | string
-    Score?: DecimalFilter<"User"> | Decimal | DecimalJsLike | number | string
+    score?: DecimalFilter<"User"> | Decimal | DecimalJsLike | number | string
     isEmailVerified?: BoolFilter<"User"> | boolean
     emailVerificationToken?: StringNullableFilter<"User"> | string | null
     emailVerificationTokenExpires?: DateTimeNullableFilter<"User"> | Date | string | null
     passwordResetToken?: StringNullableFilter<"User"> | string | null
     passwordResetTokenExpires?: DateTimeNullableFilter<"User"> | Date | string | null
-    Streak?: IntFilter<"User"> | number
+    streak?: IntFilter<"User"> | number
     refreshToken?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
@@ -10241,13 +10241,13 @@ export namespace Prisma {
     image?: SortOrderInput | SortOrder
     role?: SortOrder
     password?: SortOrder
-    Score?: SortOrder
+    score?: SortOrder
     isEmailVerified?: SortOrder
     emailVerificationToken?: SortOrderInput | SortOrder
     emailVerificationTokenExpires?: SortOrderInput | SortOrder
     passwordResetToken?: SortOrderInput | SortOrder
     passwordResetTokenExpires?: SortOrderInput | SortOrder
-    Streak?: SortOrder
+    streak?: SortOrder
     refreshToken?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -10269,13 +10269,13 @@ export namespace Prisma {
     image?: StringNullableWithAggregatesFilter<"User"> | string | null
     role?: EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
     password?: StringWithAggregatesFilter<"User"> | string
-    Score?: DecimalWithAggregatesFilter<"User"> | Decimal | DecimalJsLike | number | string
+    score?: DecimalWithAggregatesFilter<"User"> | Decimal | DecimalJsLike | number | string
     isEmailVerified?: BoolWithAggregatesFilter<"User"> | boolean
     emailVerificationToken?: StringNullableWithAggregatesFilter<"User"> | string | null
     emailVerificationTokenExpires?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
     passwordResetToken?: StringNullableWithAggregatesFilter<"User"> | string | null
     passwordResetTokenExpires?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
-    Streak?: IntWithAggregatesFilter<"User"> | number
+    streak?: IntWithAggregatesFilter<"User"> | number
     refreshToken?: StringNullableWithAggregatesFilter<"User"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -10788,13 +10788,13 @@ export namespace Prisma {
     image?: string | null
     role?: $Enums.UserRole
     password: string
-    Score?: Decimal | DecimalJsLike | number | string
+    score?: Decimal | DecimalJsLike | number | string
     isEmailVerified?: boolean
     emailVerificationToken?: string | null
     emailVerificationTokenExpires?: Date | string | null
     passwordResetToken?: string | null
     passwordResetTokenExpires?: Date | string | null
-    Streak?: number
+    streak?: number
     refreshToken?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -10812,13 +10812,13 @@ export namespace Prisma {
     image?: string | null
     role?: $Enums.UserRole
     password: string
-    Score?: Decimal | DecimalJsLike | number | string
+    score?: Decimal | DecimalJsLike | number | string
     isEmailVerified?: boolean
     emailVerificationToken?: string | null
     emailVerificationTokenExpires?: Date | string | null
     passwordResetToken?: string | null
     passwordResetTokenExpires?: Date | string | null
-    Streak?: number
+    streak?: number
     refreshToken?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -10836,13 +10836,13 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     password?: StringFieldUpdateOperationsInput | string
-    Score?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    score?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     emailVerificationToken?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerificationTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
     passwordResetTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    Streak?: IntFieldUpdateOperationsInput | number
+    streak?: IntFieldUpdateOperationsInput | number
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10860,13 +10860,13 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     password?: StringFieldUpdateOperationsInput | string
-    Score?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    score?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     emailVerificationToken?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerificationTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
     passwordResetTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    Streak?: IntFieldUpdateOperationsInput | number
+    streak?: IntFieldUpdateOperationsInput | number
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10884,13 +10884,13 @@ export namespace Prisma {
     image?: string | null
     role?: $Enums.UserRole
     password: string
-    Score?: Decimal | DecimalJsLike | number | string
+    score?: Decimal | DecimalJsLike | number | string
     isEmailVerified?: boolean
     emailVerificationToken?: string | null
     emailVerificationTokenExpires?: Date | string | null
     passwordResetToken?: string | null
     passwordResetTokenExpires?: Date | string | null
-    Streak?: number
+    streak?: number
     refreshToken?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -10904,13 +10904,13 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     password?: StringFieldUpdateOperationsInput | string
-    Score?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    score?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     emailVerificationToken?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerificationTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
     passwordResetTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    Streak?: IntFieldUpdateOperationsInput | number
+    streak?: IntFieldUpdateOperationsInput | number
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10924,13 +10924,13 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     password?: StringFieldUpdateOperationsInput | string
-    Score?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    score?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     emailVerificationToken?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerificationTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
     passwordResetTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    Streak?: IntFieldUpdateOperationsInput | number
+    streak?: IntFieldUpdateOperationsInput | number
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11618,21 +11618,21 @@ export namespace Prisma {
     image?: SortOrder
     role?: SortOrder
     password?: SortOrder
-    Score?: SortOrder
+    score?: SortOrder
     isEmailVerified?: SortOrder
     emailVerificationToken?: SortOrder
     emailVerificationTokenExpires?: SortOrder
     passwordResetToken?: SortOrder
     passwordResetTokenExpires?: SortOrder
-    Streak?: SortOrder
+    streak?: SortOrder
     refreshToken?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type UserAvgOrderByAggregateInput = {
-    Score?: SortOrder
-    Streak?: SortOrder
+    score?: SortOrder
+    streak?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -11643,13 +11643,13 @@ export namespace Prisma {
     image?: SortOrder
     role?: SortOrder
     password?: SortOrder
-    Score?: SortOrder
+    score?: SortOrder
     isEmailVerified?: SortOrder
     emailVerificationToken?: SortOrder
     emailVerificationTokenExpires?: SortOrder
     passwordResetToken?: SortOrder
     passwordResetTokenExpires?: SortOrder
-    Streak?: SortOrder
+    streak?: SortOrder
     refreshToken?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -11663,21 +11663,21 @@ export namespace Prisma {
     image?: SortOrder
     role?: SortOrder
     password?: SortOrder
-    Score?: SortOrder
+    score?: SortOrder
     isEmailVerified?: SortOrder
     emailVerificationToken?: SortOrder
     emailVerificationTokenExpires?: SortOrder
     passwordResetToken?: SortOrder
     passwordResetTokenExpires?: SortOrder
-    Streak?: SortOrder
+    streak?: SortOrder
     refreshToken?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type UserSumOrderByAggregateInput = {
-    Score?: SortOrder
-    Streak?: SortOrder
+    score?: SortOrder
+    streak?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -13246,13 +13246,13 @@ export namespace Prisma {
     image?: string | null
     role?: $Enums.UserRole
     password: string
-    Score?: Decimal | DecimalJsLike | number | string
+    score?: Decimal | DecimalJsLike | number | string
     isEmailVerified?: boolean
     emailVerificationToken?: string | null
     emailVerificationTokenExpires?: Date | string | null
     passwordResetToken?: string | null
     passwordResetTokenExpires?: Date | string | null
-    Streak?: number
+    streak?: number
     refreshToken?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -13269,13 +13269,13 @@ export namespace Prisma {
     image?: string | null
     role?: $Enums.UserRole
     password: string
-    Score?: Decimal | DecimalJsLike | number | string
+    score?: Decimal | DecimalJsLike | number | string
     isEmailVerified?: boolean
     emailVerificationToken?: string | null
     emailVerificationTokenExpires?: Date | string | null
     passwordResetToken?: string | null
     passwordResetTokenExpires?: Date | string | null
-    Streak?: number
+    streak?: number
     refreshToken?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -13400,13 +13400,13 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     password?: StringFieldUpdateOperationsInput | string
-    Score?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    score?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     emailVerificationToken?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerificationTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
     passwordResetTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    Streak?: IntFieldUpdateOperationsInput | number
+    streak?: IntFieldUpdateOperationsInput | number
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13423,13 +13423,13 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     password?: StringFieldUpdateOperationsInput | string
-    Score?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    score?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     emailVerificationToken?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerificationTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
     passwordResetTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    Streak?: IntFieldUpdateOperationsInput | number
+    streak?: IntFieldUpdateOperationsInput | number
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13505,13 +13505,13 @@ export namespace Prisma {
     image?: string | null
     role?: $Enums.UserRole
     password: string
-    Score?: Decimal | DecimalJsLike | number | string
+    score?: Decimal | DecimalJsLike | number | string
     isEmailVerified?: boolean
     emailVerificationToken?: string | null
     emailVerificationTokenExpires?: Date | string | null
     passwordResetToken?: string | null
     passwordResetTokenExpires?: Date | string | null
-    Streak?: number
+    streak?: number
     refreshToken?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -13528,13 +13528,13 @@ export namespace Prisma {
     image?: string | null
     role?: $Enums.UserRole
     password: string
-    Score?: Decimal | DecimalJsLike | number | string
+    score?: Decimal | DecimalJsLike | number | string
     isEmailVerified?: boolean
     emailVerificationToken?: string | null
     emailVerificationTokenExpires?: Date | string | null
     passwordResetToken?: string | null
     passwordResetTokenExpires?: Date | string | null
-    Streak?: number
+    streak?: number
     refreshToken?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -13652,13 +13652,13 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     password?: StringFieldUpdateOperationsInput | string
-    Score?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    score?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     emailVerificationToken?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerificationTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
     passwordResetTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    Streak?: IntFieldUpdateOperationsInput | number
+    streak?: IntFieldUpdateOperationsInput | number
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13675,13 +13675,13 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     password?: StringFieldUpdateOperationsInput | string
-    Score?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    score?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     emailVerificationToken?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerificationTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
     passwordResetTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    Streak?: IntFieldUpdateOperationsInput | number
+    streak?: IntFieldUpdateOperationsInput | number
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13868,13 +13868,13 @@ export namespace Prisma {
     image?: string | null
     role?: $Enums.UserRole
     password: string
-    Score?: Decimal | DecimalJsLike | number | string
+    score?: Decimal | DecimalJsLike | number | string
     isEmailVerified?: boolean
     emailVerificationToken?: string | null
     emailVerificationTokenExpires?: Date | string | null
     passwordResetToken?: string | null
     passwordResetTokenExpires?: Date | string | null
-    Streak?: number
+    streak?: number
     refreshToken?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -13891,13 +13891,13 @@ export namespace Prisma {
     image?: string | null
     role?: $Enums.UserRole
     password: string
-    Score?: Decimal | DecimalJsLike | number | string
+    score?: Decimal | DecimalJsLike | number | string
     isEmailVerified?: boolean
     emailVerificationToken?: string | null
     emailVerificationTokenExpires?: Date | string | null
     passwordResetToken?: string | null
     passwordResetTokenExpires?: Date | string | null
-    Streak?: number
+    streak?: number
     refreshToken?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -13975,13 +13975,13 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     password?: StringFieldUpdateOperationsInput | string
-    Score?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    score?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     emailVerificationToken?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerificationTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
     passwordResetTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    Streak?: IntFieldUpdateOperationsInput | number
+    streak?: IntFieldUpdateOperationsInput | number
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13998,13 +13998,13 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     password?: StringFieldUpdateOperationsInput | string
-    Score?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    score?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     emailVerificationToken?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerificationTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
     passwordResetTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    Streak?: IntFieldUpdateOperationsInput | number
+    streak?: IntFieldUpdateOperationsInput | number
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -14096,13 +14096,13 @@ export namespace Prisma {
     image?: string | null
     role?: $Enums.UserRole
     password: string
-    Score?: Decimal | DecimalJsLike | number | string
+    score?: Decimal | DecimalJsLike | number | string
     isEmailVerified?: boolean
     emailVerificationToken?: string | null
     emailVerificationTokenExpires?: Date | string | null
     passwordResetToken?: string | null
     passwordResetTokenExpires?: Date | string | null
-    Streak?: number
+    streak?: number
     refreshToken?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -14119,13 +14119,13 @@ export namespace Prisma {
     image?: string | null
     role?: $Enums.UserRole
     password: string
-    Score?: Decimal | DecimalJsLike | number | string
+    score?: Decimal | DecimalJsLike | number | string
     isEmailVerified?: boolean
     emailVerificationToken?: string | null
     emailVerificationTokenExpires?: Date | string | null
     passwordResetToken?: string | null
     passwordResetTokenExpires?: Date | string | null
-    Streak?: number
+    streak?: number
     refreshToken?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -14174,13 +14174,13 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     password?: StringFieldUpdateOperationsInput | string
-    Score?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    score?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     emailVerificationToken?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerificationTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
     passwordResetTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    Streak?: IntFieldUpdateOperationsInput | number
+    streak?: IntFieldUpdateOperationsInput | number
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -14197,13 +14197,13 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     password?: StringFieldUpdateOperationsInput | string
-    Score?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    score?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     emailVerificationToken?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerificationTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordResetToken?: NullableStringFieldUpdateOperationsInput | string | null
     passwordResetTokenExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    Streak?: IntFieldUpdateOperationsInput | number
+    streak?: IntFieldUpdateOperationsInput | number
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string

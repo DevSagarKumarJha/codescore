@@ -358,10 +358,10 @@ const logout = asyncHandler(async (req, res) => {
 });
 
 const getUserProfile = asyncHandler(async (req, res) => {
-  const userId = params;
+  const { userName } = req.params;
 
   const user = await db.user.findFirst({
-    where: { id: userId },
+    where: { username: userName },
     select: {
       id: true,
       name: true,
@@ -387,6 +387,120 @@ const check = asyncHandler(async (req, res) => {
   res.status(response.statusCode).json(response);
 });
 
+const refreshAccessToken = asyncHandler(async (req, res) => {
+  const incomingRefreshToken = req.cookies?.refreshToken;
+
+  if (!incomingRefreshToken) {
+    throw new ApiError(401, "Refresh token missing. Please login again.");
+  }
+
+  let decoded;
+  try {
+    decoded = jwt.verify(
+      incomingRefreshToken,
+      process.env.REFRESH_TOKEN_SECRET
+    );
+  } catch (error) {
+    throw new ApiError(401, "Invalid or expired refresh token. Please login.");
+  }
+
+  const existingUser = await db.user.findUnique({
+    where: { id: decoded.id },
+  });
+
+  if (
+    !existingUser ||
+    !existingUser.refreshToken ||
+    existingUser.refreshToken !== incomingRefreshToken
+  ) {
+    throw new ApiError(403, "Refresh token mismatch or user not found");
+  }
+
+  const newAccessToken = generateAccessToken({
+    id: existingUser.id,
+    email: existingUser.email,
+    username: existingUser.username,
+  });
+
+  // (Optional) Also refresh the refresh token
+  const newRefreshToken = generateRefreshToken({ id: existingUser.id });
+
+  await db.user.update({
+    where: { id: existingUser.id },
+    data: { refreshToken: newRefreshToken },
+  });
+
+  const response = new ApiResponse(200, "Access token refreshed successfully");
+
+  res
+    .status(response.statusCode)
+    .cookie("accessToken", newAccessToken, {
+      httpOnly: true,
+      sameSite: "strict",
+      secure: process.env.NODE_ENV === "production",
+    })
+    .cookie("refreshToken", newRefreshToken, {
+      httpOnly: true,
+      sameSite: "strict",
+      secure: process.env.NODE_ENV === "production",
+    })
+    .json(response);
+});
+
+const getAllUsers = asyncHandler(async (req, res) => {
+  const { page = 1, limit = 10, search = "" } = req.query;
+
+  const skip = (page - 1) * limit;
+
+  const users = await db.user.findMany({
+    where: {
+      OR: [
+        { name: { contains: search, mode: "insensitive" } },
+        { email: { contains: search, mode: "insensitive" } },
+        { username: { contains: search, mode: "insensitive" } },
+      ],
+    },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      username: true,
+      role: true,
+      isEmailVerified: true,
+      image: true,
+      score: true,
+      createdAt: true,
+    },
+    skip: Number(skip),
+    take: Number(limit),
+    orderBy: {
+      score: "desc",
+    },
+  });
+
+  const totalUsers = await db.user.count({
+    where: {
+      OR: [
+        { name: { contains: search, mode: "insensitive" } },
+        { email: { contains: search, mode: "insensitive" } },
+        { username: { contains: search, mode: "insensitive" } },
+      ],
+    },
+  });
+
+  const response = new ApiResponse(200, "Users fetched successfully", {
+    users,
+    pagination: {
+      total: totalUsers,
+      page: Number(page),
+      limit: Number(limit),
+      totalPages: Math.ceil(totalUsers / limit),
+    },
+  });
+
+  res.status(200).json(response);
+});
+
 export {
   register,
   verifyEmail,
@@ -397,4 +511,6 @@ export {
   logout,
   getUserProfile,
   check,
+  refreshAccessToken,
+  getAllUsers,
 };

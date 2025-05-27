@@ -1,7 +1,6 @@
 import express from "express";
 import {
   check,
-  getUserProfile,
   login,
   logout,
   register,
@@ -19,6 +18,6 @@ authRoutes.route("/login").post(login);
 authRoutes.route("/logout").post(authMiddleware, logout);
 // authRoutes.route("/me").get(getMe);
 authRoutes.route("/check").get(authMiddleware, check);
-authRoutes.route("/profile").get(authMiddleware, getUserProfile);
+
 
 export default authRoutes;

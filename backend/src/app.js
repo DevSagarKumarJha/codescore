@@ -8,6 +8,7 @@ import { errorHandler } from "./middleware/errorHandler.middleware.js";
 import executionRoutes from "./routes/executeCode.routes.js";
 import submissionRoutes from "./routes/submission.routes.js";
 import playlistRoutes from "./routes/playlist.routes.js";
+import userRoutes from "./routes/user.routes.js";
 
 
 const app = express();
@@ -20,6 +21,7 @@ app.get("/", (req, res) => {
 })
 
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/problem", problemRoutes);
 app.use("/api/v1/execute-code", executionRoutes);
 app.use("/api/v1/submission", submissionRoutes);
