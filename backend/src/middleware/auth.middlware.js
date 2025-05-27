@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import { db } from "../libs/db.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
+import { ApiError } from "../utils/api-error.js";
 
 export const authMiddleware = asyncHandler(async (req, res, next) => {
   const token = req.cookies?.accessToken;
@@ -20,15 +21,18 @@ export const authMiddleware = asyncHandler(async (req, res, next) => {
       },
       select: {
         id: true,
-        image: true,
         name: true,
         email: true,
+        username: true,
+        image: true,
         role: true,
+        score: true,
+        streak: true,
       },
     });
 
     if (!user) {
-      return res.status(404).json({ error: "User not found" });
+      throw new ApiError(404, "User not found");
     }
 
     req.user = user;
@@ -51,7 +55,7 @@ export const checkAdmin = asyncHandler(async (req, res, next) => {
   });
 
   if (!user || user.role !== "ADMIN") {
-    return res.status(403).json({ error: "Access denied - Admins only" });
+    throw new ApiError(403, "Access denied - Admins only");
   }
 
   next();

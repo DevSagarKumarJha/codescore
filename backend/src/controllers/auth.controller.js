@@ -357,12 +357,21 @@ const logout = asyncHandler(async (req, res) => {
   res.status(response.statusCode).json(response);
 });
 
-const getProfile = asyncHandler(async (req, res) => {
+const getUserProfile = asyncHandler(async (req, res) => {
   const userId = params;
 
   const user = await db.user.findFirst({
-    where:{id: userId}
-  })
+    where: { id: userId },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      username: true,
+      image: true,
+      role: true,
+      score: true,
+    },
+  });
 
   const response = new ApiResponse(200, "User profile fetched successfully", {
     user,
@@ -386,6 +395,6 @@ export {
   resetPassword,
   login,
   logout,
-  getProfile,
+  getUserProfile,
   check,
 };
