@@ -83,7 +83,7 @@ const register = asyncHandler(async (req, res) => {
   const refreshToken = generateRefreshToken({ id: newUser.id });
 
   // Optionally store refresh token in DB
-  await prisma.user.update({
+  await db.user.update({
     where: { id: newUser.id },
     data: { refreshToken },
   });
@@ -289,7 +289,7 @@ const login = asyncHandler(async (req, res) => {
   const refreshToken = generateRefreshToken({ id: user.id });
 
   // Optionally store refresh token in DB
-  await prisma.user.update({
+  await db.user.update({
     where: { id: user.id },
     data: { refreshToken },
   });

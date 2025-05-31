@@ -24,6 +24,7 @@ export const authMiddleware = asyncHandler(async (req, res, next) => {
         name: true,
         email: true,
         username: true,
+        isEmailVerified: true,
         image: true,
         role: true,
         score: true,

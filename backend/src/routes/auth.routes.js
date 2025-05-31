@@ -3,6 +3,7 @@ import {
   check,
   login,
   logout,
+  refreshAccessToken,
   register,
   resendVerificationMail,
   verifyEmail,
@@ -18,6 +19,8 @@ authRoutes.route("/login").post(login);
 authRoutes.route("/logout").post(authMiddleware, logout);
 // authRoutes.route("/me").get(getMe);
 authRoutes.route("/check").get(authMiddleware, check);
+authRoutes.route("/refresh").post(refreshAccessToken);
+
 
 
 export default authRoutes;
