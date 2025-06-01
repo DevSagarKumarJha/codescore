@@ -32,16 +32,13 @@ const App = () => {
         />
         <Route
           path="/signup"
-          element={authUser===null ? <SignUpPage /> : <Navigate to="/" />}
+          element={authUser === null ? <SignUpPage /> : <Navigate to="/" />}
         />
         <Route
           path="/signin"
-          element={authUser===null ? <LoginPage /> : <Navigate to="/" />}
+          element={authUser === null ? <LoginPage /> : <Navigate to="/" />}
         />
-        <Route
-          path="/verify/:token"
-          element={ <VerifyEmailPage />}
-        />
+        <Route path="/verify/:token" element={<VerifyEmailPage />} />
       </Routes>
     </div>
   );

@@ -16,7 +16,6 @@ export const useAuthStore = create((set) => ({
       set({ authUser: res.data.data.user });
     } catch (error) {
       set({ authUser: null });
-      throw error
     } finally {
       set({ isCheckingAuth: false });
     }
@@ -30,7 +29,6 @@ export const useAuthStore = create((set) => ({
       toast.success(res.data.message);
     } catch (error) {
       toast.error("Error signing up");
-      throw error;
     } finally {
       set({ isSigninUp: false });
     }
@@ -44,7 +42,6 @@ export const useAuthStore = create((set) => ({
       toast.success(res.data.message);
     } catch (error) {
       toast.error("Error logging in");
-      throw error;
     } finally {
       set({ isLoggingIn: false });
     }
@@ -57,7 +54,6 @@ export const useAuthStore = create((set) => ({
       toast.success("Logout successful");
     } catch (error) {
       toast.error("Error logging out");
-      throw error;
     }
   },
 
@@ -68,7 +64,6 @@ export const useAuthStore = create((set) => ({
       set({ authUser: res.data.user }); // or just update token if separate
     } catch (error) {
       set({ authUser: null });
-      throw error;
     }
   },
 
@@ -78,7 +73,6 @@ export const useAuthStore = create((set) => ({
       toast.success(res.data.message);
     } catch (error) {
       toast.error("Invalid or expired token");
-      throw error;
     }
   },
 
@@ -92,7 +86,6 @@ export const useAuthStore = create((set) => ({
       toast.success(res.data.message || "Password reset successful");
     } catch (error) {
       toast.error("Reset failed");
-      throw error;
     }
   },
 }));
