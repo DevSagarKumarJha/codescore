@@ -6,10 +6,8 @@ import { useAuthStore } from '../store/useAuthStore'
 const HomePage = () => {
   const {authUser} = useAuthStore();
   return (
-    <div>
-      <h1>Home Page</h1>
-      <p>Hello, {authUser?.name}</p>
-      <LogoutButton/>
+    <div className='min-h-screen flex flex-col items-center mt-14 px-4'>
+
     </div>
   )
 }

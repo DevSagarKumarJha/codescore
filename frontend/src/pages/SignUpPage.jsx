@@ -32,9 +32,8 @@ const SignUpPage = () => {
   const onSubmit = async (data) => {
     try {
       await signup(data)
-      
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   };
   return (
