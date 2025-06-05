@@ -9,13 +9,15 @@ import { useAuthStore } from "./store/useAuthStore";
 import Layout from "./layout/Layout";
 import AdminRoute from "./components/AdminComponents/AdminRoute";
 import AddProblem from "./pages/AddProblem";
+import AuthRoute from "./components/AuthRoute";
 
 const App = () => {
   const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
 
   useEffect(() => {
-    checkAuth();
-  }, [checkAuth]); // Run only on mount
+    checkAuth(); // ensures auth status is refreshed
+  }, [checkAuth]);
+
 
   if (isCheckingAuth) {
     return (
@@ -30,25 +32,30 @@ const App = () => {
       <Toaster />
       <Routes>
         <Route path="/" element={<Layout />}>
+          {/* ✅ Public Routes */}
+          <Route index element={<HomePage />} />
           <Route
-            index
-            path="/"
+            path="signup"
             element={
-              authUser !== null ? <HomePage /> : <Navigate to="/signin" />
+              <AuthRoute>
+                <SignUpPage />
+              </AuthRoute>
             }
           />
           <Route
-            path="/signup"
-            element={authUser === null ? <SignUpPage /> : <Navigate to="/" />}
+            path="signin"
+            element={
+              <AuthRoute>
+                <LoginPage />
+              </AuthRoute>
+            }
           />
-          <Route
-            path="/signin"
-            element={authUser === null ? <LoginPage /> : <Navigate to="/" />}
-          />
-          <Route path="/verify/:token" element={<VerifyEmailPage />} />
 
+          <Route path="verify/:token" element={<VerifyEmailPage />} />
+
+          {/* ✅ Admin Routes */}
           <Route element={<AdminRoute />}>
-            <Route path="/add-problem" element={authUser !== null ? <AddProblem/> : <Navigate to="/"/>} />
+            <Route path="add-problem" element={<AddProblem />} />
           </Route>
         </Route>
       </Routes>

@@ -1,84 +1,164 @@
-import React from "react";
-import { User, Code, LogOut, CurlyBraces, } from "lucide-react";
+import React, { useEffect, useRef, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import {
+  Menu,
+  X,
+  User,
+  Code,
+  CurlyBraces,
+  LogOutIcon,
+} from "lucide-react";
 import { useAuthStore } from "../../store/useAuthStore";
-import { Link } from "react-router-dom";
 import LogoutButton from "../Buttons/LogoutButton";
 
 const Navbar = () => {
   const { authUser } = useAuthStore();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [prevScrollY, setPrevScrollY] = useState(0);
+  const [showNavbar, setShowNavbar] = useState(true);
+
+  const dropdownRef = useRef(null);
+  const location = useLocation();
+
+  // Handle mobile menu toggle
+  const toggleMenu = () => setIsMenuOpen((prev) => !prev);
+
+  // Handle scroll direction
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      setShowNavbar(currentScrollY < prevScrollY || currentScrollY < 10);
+      setPrevScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [prevScrollY]);
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // Close dropdown & mobile menu on route change
+  useEffect(() => {
+    setIsDropdownOpen(false);
+    setIsMenuOpen(false);
+  }, [location]);
 
   return (
-    <nav className="sticky top-0 z-50 w-full py-5">
-      <div className="flex w-full justify-between mx-auto max-w-4xl bg-black/15 shadow-lg shadow-neutral-600/5 backdrop-blur-lg border border-gray-200/10 p-4 rounded-2xl">
-        {/* Logo Section */}
+    <nav
+      className={`z-50 w-full px-2 transition-transform duration-300 ${
+        showNavbar ? "translate-y-0" : "-translate-y-full"
+      } sticky top-0`}
+    >
+      <div className="flex justify-between items-center mx-auto max-w-7xl bg-black/15 shadow-lg shadow-neutral-600/5 backdrop-blur-lg border border-gray-200/10 p-4 rounded-sm">
+        {/* Logo */}
         <Link to="/" className="flex items-center gap-3 cursor-pointer">
-         <div className="rounded-full bg-amber-500 p-3 text-4xl">
-          <CurlyBraces className="size-12"/>
+          <div className="rounded-full bg-amber-500 p-3 text-4xl">
+            <CurlyBraces className="size-6 text-white" />
           </div>
           <span className="text-lg md:text-2xl font-bold tracking-tight text-white hidden md:block">
             CodeScore
           </span>
         </Link>
 
-        {/* User Profile and Dropdown */}
-        <div className="flex items-center gap-8">
-          <div className="dropdown dropdown-end">
-            <label
-              tabIndex={0}
-              className="btn btn-ghost btn-circle avatar flex flex-row "
-            >
-              <div className="w-10 rounded-full ">
-                <img
-                  src={
-                    authUser?.image ||
-                    "https://avatar.iran.liara.run/public/boy"
-                  }
-                  alt="User Avatar"
-                  className="object-cover"
-                />
-              </div>
-            </label>
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 space-y-3"
-            >
-              {/* Admin Option */}
+        {/* Desktop Menu */}
+        <div className="hidden md:flex items-center gap-8">
+          {authUser !== null && (
+            <div className="relative" ref={dropdownRef}>
+              <button
+                onClick={() => setIsDropdownOpen((prev) => !prev)}
+                className="btn btn-ghost btn-circle avatar"
+              >
+                <div className="w-10 rounded-full">
+                  <img
+                    src={
+                      authUser?.image ||
+                      "https://avatar.iran.liara.run/public/boy"
+                    }
+                    alt="User Avatar"
+                    className="object-cover"
+                  />
+                </div>
+              </button>
 
-              {/* Common Options */}
-              <li>
-                <p className="text-base font-semibold">{authUser?.name}</p>
-                <hr className="border-gray-200/10" />
-              </li>
-              <li>
-                <Link
-                  to="/profile"
-                  className="hover:bg-primary hover:text-white text-base font-semibold"
-                >
-                  <User className="w-4 h-4 mr-2" />
-                  My Profile
-                </Link>
-              </li>
-              {authUser?.role === "ADMIN" && (
-                <li>
-                  <Link
-                    to="/add-problem"
-                    className="hover:bg-primary hover:text-white text-base font-semibold"
-                  >
-                    <Code className="w-4 h-4 mr-1" />
-                    Add Problem
-                  </Link>
-                </li>
+              {isDropdownOpen && (
+                <ul className="absolute right-0 mt-2 z-[1] p-2 shadow bg-base-100 rounded-box w-52 space-y-3">
+                  <li>
+                    <p className="text-base font-semibold">{authUser.name}</p>
+                    <hr className="border-gray-200/10" />
+                  </li>
+                  <li>
+                    <Link
+                      to="/profile"
+                      className="flex items-center gap-2 hover:bg-primary hover:text-white p-2 rounded"
+                    >
+                      <User className="w-4 h-4" />
+                      My Profile
+                    </Link>
+                  </li>
+                  {authUser.role === "ADMIN" && (
+                    <li>
+                      <Link
+                        to="/add-problem"
+                        className="flex items-center gap-2 hover:bg-primary hover:text-white p-2 rounded"
+                      >
+                        <Code className="w-4 h-4" />
+                        Add Problem
+                      </Link>
+                    </li>
+                  )}
+                  <li>
+                    <LogoutButton />
+                  </li>
+                </ul>
               )}
-              <li>
-                <LogoutButton className="hover:bg-primary hover:text-white">
-                  <LogOut className="w-4 h-4 mr-2" />
-                  Logout
-                </LogoutButton>
-              </li>
-            </ul>
-          </div>
+            </div>
+          )}
         </div>
+
+        {/* Mobile Hamburger */}
+        <button className="md:hidden p-2 text-white" onClick={toggleMenu}>
+          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
       </div>
+
+      {/* Mobile Dropdown */}
+      {isMenuOpen && authUser && (
+        <div className="md:hidden bg-base-100 p-4 rounded shadow mt-1 space-y-3">
+          <p className="text-base font-semibold text-center">{authUser.name}</p>
+          <hr className="border-gray-200/10" />
+
+          <Link
+            to="/profile"
+            className="flex items-center gap-2 hover:bg-primary hover:text-white p-2 rounded"
+          >
+            <User size={18} />
+            My Profile
+          </Link>
+
+          {authUser.role === "ADMIN" && (
+            <Link
+              to="/add-problem"
+              className="flex items-center gap-2 hover:bg-primary hover:text-white p-2 rounded"
+            >
+              <Code size={18} />
+              Add Problem
+            </Link>
+          )}
+
+          <LogoutButton/>
+        </div>
+      )}
     </nav>
   );
 };

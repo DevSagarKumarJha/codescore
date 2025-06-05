@@ -1,3 +1,4 @@
+import { LogOutIcon } from "lucide-react";
 import { useAuthStore } from "../../store/useAuthStore";
 
 export default function LogoutButton() {
@@ -12,5 +13,13 @@ export default function LogoutButton() {
   };
   if (authUser === null) return null; // optional: hide if not logged in
 
-  return <button onClick={logOutUser}>Logout</button>;
+  return (
+    <button
+      className="flex cursor-pointer items-center gap-2 bg-red-500 hover:bg-red-600 w-full hover:text-white p-2 rounded"
+      onClick={logOutUser}
+    >
+      <LogOutIcon className="w-4 h-4" />
+      Logout
+    </button>
+  );
 }

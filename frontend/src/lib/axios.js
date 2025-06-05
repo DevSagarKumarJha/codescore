@@ -5,7 +5,7 @@ import { useAuthStore } from "../store/useAuthStore";
 const axiosInstance = axios.create({
   baseURL:
     import.meta.env.MODE === "development"
-      ? "http://localhost:8000/api/v1"
+      ? "http://192.168.1.4:8000/api/v1"
       : "/api/v1",
   withCredentials: true,
 });

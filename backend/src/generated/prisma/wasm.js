@@ -120,6 +120,14 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.RefreshTokenScalarFieldEnum = {
+  id: 'id',
+  token: 'token',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  expiresAt: 'expiresAt'
+};
+
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -135,7 +143,6 @@ exports.Prisma.UserScalarFieldEnum = {
   passwordResetToken: 'passwordResetToken',
   passwordResetTokenExpires: 'passwordResetTokenExpires',
   streak: 'streak',
-  refreshToken: 'refreshToken',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -252,6 +259,7 @@ exports.Difficulty = exports.$Enums.Difficulty = {
 };
 
 exports.Prisma.ModelName = {
+  RefreshToken: 'RefreshToken',
   User: 'User',
   Problem: 'Problem',
   Submission: 'Submission',

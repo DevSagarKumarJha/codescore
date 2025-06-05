@@ -16,10 +16,14 @@ const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({
-    origin: process.env.FRONTEND_URI || "http://localhost:5173",
+app.use(
+  cors({
+    origin:
+      process.env.FRONTEND_URI ||
+      "http://192.168.1.4:5173",
     credentials: true,
-}))
+  })
+);
 
 app.get("/", (req, res) => {
     res.send("Hello, It is a leetlab practice server");

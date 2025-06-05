@@ -569,7 +569,7 @@ const CreateProblemForm = () => {
   const onSubmit = async (value) => {
     try {
       setIsLoading(true);
-      const res = await axiosInstance.post("/problems/create-problem", value);
+      const res = await axiosInstance.post("/problem/create-problem", value);
       console.log(res.data);
       toast.success(res.data.message || "Problem Created successfully⚡");
       navigation("/");
@@ -608,7 +608,7 @@ const CreateProblemForm = () => {
                   className={`btn join-item ${
                     sampleType === "DP" ? "btn-active" : ""
                   }`}
-                  onClick={() => setSampleType("array")}
+                  onClick={() => setSampleType("DP")}
                 >
                   DP Problem
                 </button>

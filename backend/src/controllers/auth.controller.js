@@ -83,9 +83,12 @@ const register = asyncHandler(async (req, res) => {
   const refreshToken = generateRefreshToken({ id: newUser.id });
 
   // Optionally store refresh token in DB
-  await db.user.update({
-    where: { id: newUser.id },
-    data: { refreshToken },
+  await db.refreshToken.create({
+    data: {
+      token: refreshToken,
+      userId: user.id,
+      expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
+    },
   });
 
   const response = new ApiResponse(201, "User created successfully", {
@@ -289,9 +292,12 @@ const login = asyncHandler(async (req, res) => {
   const refreshToken = generateRefreshToken({ id: user.id });
 
   // Optionally store refresh token in DB
-  await db.user.update({
-    where: { id: user.id },
-    data: { refreshToken },
+  await db.refreshToken.create({
+    data: {
+      token: refreshToken,
+      userId: user.id,
+      expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
+    },
   });
 
   const response = new ApiResponse(200, "User logged in successfully", {
@@ -323,38 +329,26 @@ const logout = asyncHandler(async (req, res) => {
   const refreshToken = req.cookies?.refreshToken;
 
   if (!refreshToken) {
-    return res.status(200).json(new ApiResponse(200, "User logged out"));
+    return res.status(404).json(new ApiResponse(404, "User logged out already"));
   }
 
-  try {
-    // Decode token to get user ID
-    const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
-
-    // Remove refresh token from DB
-    await db.user.update({
-      where: { id: decoded.id },
-      data: { refreshToken: null },
-    });
-  } catch (error) {
-    // Token might be invalid/expired — we silently continue to clear cookies
-    console.error("Logout error:", error.message);
-  }
-
-  // Clear access and refresh tokens from cookies
-  res.clearCookie("accessToken", {
-    httpOnly: true,
-    sameSite: "strict",
-    secure: process.env.NODE_ENV !== "development",
+  await db.refreshToken.delete({
+    where: { token: refreshToken },
   });
 
-  res.clearCookie("refreshToken", {
-    httpOnly: true,
-    sameSite: "strict",
-    secure: process.env.NODE_ENV !== "development",
-  });
-
-  const response = new ApiResponse(200, "User logged out successfully");
-  res.status(response.statusCode).json(response);
+  res
+    .clearCookie("accessToken", {
+      httpOnly: true,
+      sameSite: "strict",
+      secure: process.env.NODE_ENV === "production",
+    })
+    .clearCookie("refreshToken", {
+      httpOnly: true,
+      sameSite: "strict",
+      secure: process.env.NODE_ENV === "production",
+    })
+    .status(200)
+    .json(new ApiResponse(200, "User logged out successfully"));
 });
 
 const getUserProfile = asyncHandler(async (req, res) => {
@@ -408,27 +402,39 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
     where: { id: decoded.id },
   });
 
+  const storedToken = await db.refreshToken.findUnique({
+    where: { token: incomingRefreshToken },
+  });
+
   if (
-    !existingUser ||
-    !existingUser.refreshToken ||
-    existingUser.refreshToken !== incomingRefreshToken
+    !storedToken ||
+    storedToken.userId !== decoded.id ||
+    storedToken.expiresAt < new Date()
   ) {
-    throw new ApiError(403, "Refresh token mismatch or user not found");
+    throw new ApiError(403, "Refresh token mismatch, expired or not found");
   }
+
 
   const newAccessToken = generateAccessToken({
     id: existingUser.id,
     email: existingUser.email,
     username: existingUser.username,
   });
-
-  // (Optional) Also refresh the refresh token
+  
   const newRefreshToken = generateRefreshToken({ id: existingUser.id });
 
-  await db.user.update({
-    where: { id: existingUser.id },
-    data: { refreshToken: newRefreshToken },
+  await db.refreshToken.delete({
+    where: { token: incomingRefreshToken },
   });
+
+  await db.refreshToken.create({
+    data: {
+      token: newRefreshToken,
+      userId: existingUser.id,
+      expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+    },
+  });
+
 
   const response = new ApiResponse(200, "Access token refreshed successfully");
 
