@@ -1,46 +1,70 @@
-// lib/axios.ts
+// lib/axios.js
 import axios from "axios";
 import { useAuthStore } from "../store/useAuthStore";
 
 const axiosInstance = axios.create({
   baseURL:
     import.meta.env.MODE === "development"
-      ? "http://192.168.1.4:8000/api/v1"
+      ? "http://localhost:8000/api/v1"
       : "/api/v1",
   withCredentials: true,
 });
 
+let isRefreshing = false;
+let failedQueue = [];
+
+const processQueue = (error, response = null) => {
+  failedQueue.forEach((prom) => {
+    if (error) {
+      prom.reject(error);
+    } else {
+      prom.resolve(response);
+    }
+  });
+  failedQueue = [];
+};
+
 axiosInstance.interceptors.response.use(
-  (res) => res,
+  (response) => response,
   async (error) => {
-    console.log(error);
     const originalRequest = error.config;
     const status = error?.response?.status;
     const { refreshAccessToken, logout } = useAuthStore.getState();
 
-    console.log("error conf ", originalRequest);
-    console.log(
-      "error status ",
-      status,
-      originalRequest.url,
-    );
-    // Only retry if:
     if (
       status === 401 &&
       !originalRequest._retry &&
       !originalRequest.url.includes("/auth/refresh")
-      // && authUser // user is logged in, so a refreshToken likely exists
     ) {
-      console.log("working");
       originalRequest._retry = true;
 
+      if (isRefreshing) {
+        return new Promise((resolve, reject) => {
+          failedQueue.push({ resolve, reject });
+        })
+          .then(() => axiosInstance(originalRequest))
+          .catch(Promise.reject);
+      }
+
+      isRefreshing = true;
+
       try {
-        await refreshAccessToken(); // should send cookie and receive new cookie
-        return axiosInstance(originalRequest); // retry original request
-      } catch (error) {
-        console.log(error);
-        await logout(); // cleanup if refresh fails
-        return Promise.reject(error);
+        await refreshAccessToken(); // gets new cookies
+        processQueue(null);
+        return axiosInstance(originalRequest); // retry original
+      } catch (refreshError) {
+        processQueue(refreshError);
+
+        if (
+          refreshError?.response?.status === 403 ||
+          refreshError?.response?.status === 401
+        ) {
+          await logout();
+        }
+
+        return Promise.reject(refreshError);
+      } finally {
+        isRefreshing = false;
       }
     }
 

@@ -7,6 +7,7 @@ import {
   Code,
   CurlyBraces,
   LogOutIcon,
+  BracesIcon,
 } from "lucide-react";
 import { useAuthStore } from "../../store/useAuthStore";
 import LogoutButton from "../Buttons/LogoutButton";
@@ -56,18 +57,18 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`z-50 w-full px-2 transition-transform duration-300 ${
+      className={`z-50 w-full transition-transform duration-300 ${
         showNavbar ? "translate-y-0" : "-translate-y-full"
       } sticky top-0`}
     >
-      <div className="flex justify-between items-center mx-auto max-w-7xl bg-black/15 shadow-lg shadow-neutral-600/5 backdrop-blur-lg border border-gray-200/10 p-4 rounded-sm">
+      <div className="flex justify-between items-center mx-auto max-w-7xl bg-black/15 shadow-lg shadow-neutral-600/5 backdrop-blur-lg border border-gray-200/10 md:p-4 rounded-sm">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-3 cursor-pointer">
-          <div className="rounded-full bg-amber-500 p-3 text-4xl">
-            <CurlyBraces className="size-6 text-white" />
-          </div>
-          <span className="text-lg md:text-2xl font-bold tracking-tight text-white hidden md:block">
-            CodeScore
+          <span className="text-amber-400 font-bold text-2xl inline-flex justify-center items-center">
+            C<BracesIcon size={18} />
+            DE SC
+            <BracesIcon size={18} />
+            RE
           </span>
         </Link>
 
@@ -156,7 +157,7 @@ const Navbar = () => {
             </Link>
           )}
 
-          <LogoutButton/>
+          <LogoutButton />
         </div>
       )}
     </nav>

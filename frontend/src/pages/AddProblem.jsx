@@ -1,5 +1,6 @@
 import React from 'react'
-import CreateProblemForm from '../components/AdminComponents/CreateProblemForm'
+import {CreateProblemForm} from "../components"
+
 
 const AddProblem = () => {
   return (

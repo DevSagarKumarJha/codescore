@@ -1,5 +1,5 @@
-import React from "react";
-import { useForm, useFieldArray, Controller } from "react-hook-form";
+import { useForm, useFieldArray,Controller } from "react-hook-form";
+import Editor from "@monaco-editor/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import {
@@ -12,12 +12,12 @@ import {
   CheckCircle2,
   Download,
 } from "lucide-react";
-import Editor from "@monaco-editor/react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 import { axiosInstance } from "../../lib/axios";
+
 
 
 const problemSchema = z.object({
@@ -592,8 +592,8 @@ const CreateProblemForm = () => {
   };
 
   return (
-    <div className="container mx-auto py-8 px-4 max-w-7xl">
-      <div className="card bg-base-100 shadow-xl">
+    <div className="container mx-auto md:py-8 md:px-4 max-w-7xl">
+      <div className="card bg-black/15 shadow-neutral-600/5 backdrop-blur-lg border border-gray-200/10">
         <div className="card-body p-6 md:p-8">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 md:mb-8 pb-4 border-b">
             <h2 className="card-title text-2xl md:text-3xl flex items-center gap-3">
@@ -601,8 +601,8 @@ const CreateProblemForm = () => {
               Create Problem
             </h2>
 
-            <div className="flex flex-col md:flex-row gap-3 mt-4 md:mt-0">
-              <div className="join">
+            <div className="flex flex-col md:flex-row gap-3 md:w-fit w-full mt-4 md:mt-0">
+              <div className="join max-sm:mx-auto">
                 <button
                   type="button"
                   className={`btn join-item ${
@@ -636,7 +636,7 @@ const CreateProblemForm = () => {
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
             {/* Basic Information */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="form-control md:col-span-2">
+              <div className="form-control">
                 <label className="label">
                   <span className="label-text text-base md:text-lg font-semibold">
                     Title
@@ -656,27 +656,6 @@ const CreateProblemForm = () => {
                   </label>
                 )}
               </div>
-
-              <div className="form-control md:col-span-2">
-                <label className="label">
-                  <span className="label-text text-base md:text-lg font-semibold">
-                    Description
-                  </span>
-                </label>
-                <textarea
-                  className="textarea textarea-bordered min-h-32 w-full text-base md:text-lg p-4 resize-y"
-                  {...register("description")}
-                  placeholder="Enter problem description"
-                />
-                {errors.description && (
-                  <label className="label">
-                    <span className="label-text-alt text-error">
-                      {errors.description.message}
-                    </span>
-                  </label>
-                )}
-              </div>
-
               <div className="form-control">
                 <label className="label">
                   <span className="label-text text-base md:text-lg font-semibold">
@@ -695,6 +674,25 @@ const CreateProblemForm = () => {
                   <label className="label">
                     <span className="label-text-alt text-error">
                       {errors.difficulty.message}
+                    </span>
+                  </label>
+                )}
+              </div>
+              <div className="form-control md:col-span-2">
+                <label className="label">
+                  <span className="label-text text-base md:text-lg font-semibold">
+                    Description
+                  </span>
+                </label>
+                <textarea
+                  className="textarea textarea-bordered min-h-32 w-full text-base md:text-lg p-4 resize-y"
+                  {...register("description")}
+                  placeholder="Enter problem description"
+                />
+                {errors.description && (
+                  <label className="label">
+                    <span className="label-text-alt text-error">
+                      {errors.description.message}
                     </span>
                   </label>
                 )}
@@ -833,145 +831,130 @@ const CreateProblemForm = () => {
             {/* Code Editor Sections */}
             <div className="space-y-8">
               {["JAVASCRIPT", "PYTHON", "JAVA"].map((language) => (
-                <div
-                  key={language}
-                  className="card bg-base-200 p-4 md:p-6 shadow-md"
-                >
+                <div key={language}>
                   <h3 className="text-lg md:text-xl font-semibold mb-6 flex items-center gap-2">
                     <Code2 className="w-5 h-5" />
                     {language}
                   </h3>
-
                   <div className="space-y-6">
-                    {/* Starter Code */}
-                    <div className="card bg-base-100 shadow-md">
-                      <div className="card-body p-4 md:p-6">
-                        <h4 className="font-semibold text-base md:text-lg mb-4">
-                          Starter Code Template
-                        </h4>
-                        <div className="border rounded-md overflow-hidden">
-                          <Controller
-                            name={`codeSnippets.${language}`}
-                            control={control}
-                            render={({ field }) => (
-                              <Editor
-                                height="300px"
-                                language={language.toLowerCase()}
-                                theme="vs-dark"
-                                value={field.value}
-                                onChange={field.onChange}
-                                options={{
-                                  minimap: { enabled: false },
-                                  fontSize: 14,
-                                  lineNumbers: "on",
-                                  roundedSelection: false,
-                                  scrollBeyondLastLine: false,
-                                  automaticLayout: true,
-                                }}
-                              />
-                            )}
-                          />
-                        </div>
-                        {errors.codeSnippets?.[language] && (
-                          <div className="mt-2">
-                            <span className="text-error text-sm">
+                    {/* Code Editors Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      {/* Starter Code */}
+                      <div className="card bg-base-100 shadow-md">
+                        <div className="card-body p-4 md:p-6">
+                          <h4 className="font-semibold text-base md:text-lg mb-4">
+                            Starter Code Template
+                          </h4>
+                          <div className="border rounded-md overflow-hidden">
+                            <Controller
+                              name={`codeSnippets.${language}`}
+                              control={control}
+                              render={({ field }) => (
+                                <Editor
+                                  height="300px"
+                                  language={language.toLowerCase()}
+                                  theme="vs-dark"
+                                  value={field.value}
+                                  onChange={field.onChange}
+                                  options={{
+                                    minimap: { enabled: false },
+                                    fontSize: 14,
+                                    lineNumbers: "on",
+                                    roundedSelection: true,
+                                    scrollBeyondLastLine: true,
+                                    automaticLayout: true,
+                                    suggestOnTriggerCharacters: true,
+                                    wordBasedSuggestions: true,
+                                  }}
+                                />
+                              )}
+                            />
+                          </div>
+                          {errors.codeSnippets?.[language] && (
+                            <span className="text-error text-sm mt-2 block">
                               {errors.codeSnippets[language].message}
                             </span>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Reference Solution */}
-                    <div className="card bg-base-100 shadow-md">
-                      <div className="card-body p-4 md:p-6">
-                        <h4 className="font-semibold text-base md:text-lg mb-4 flex items-center gap-2">
-                          <CheckCircle2 className="w-5 h-5 text-success" />
-                          Reference Solution
-                        </h4>
-                        <div className="border rounded-md overflow-hidden">
-                          <Controller
-                            name={`referenceSolutions.${language}`}
-                            control={control}
-                            render={({ field }) => (
-                              <Editor
-                                height="300px"
-                                language={language.toLowerCase()}
-                                theme="vs-dark"
-                                value={field.value}
-                                onChange={field.onChange}
-                                options={{
-                                  minimap: { enabled: false },
-                                  fontSize: 14,
-                                  lineNumbers: "on",
-                                  roundedSelection: false,
-                                  scrollBeyondLastLine: false,
-                                  automaticLayout: true,
-                                }}
-                              />
-                            )}
-                          />
+                          )}
                         </div>
-                        {errors.referenceSolutions?.[language] && (
-                          <div className="mt-2">
-                            <span className="text-error text-sm">
+                      </div>
+
+                      {/* Reference Solution */}
+                      <div className="card bg-base-100 shadow-md">
+                        <div className="card-body p-4 md:p-6">
+                          <h4 className="font-semibold text-base md:text-lg mb-4 flex items-center gap-2">
+                            <CheckCircle2 className="w-5 h-5 text-success" />
+                            Reference Solution
+                          </h4>
+                          <div className="border rounded-md overflow-hidden">
+                            <Controller
+                              name={`referenceSolutions.${language}`}
+                              control={control}
+                              render={({ field }) => (
+                                <Editor
+                                  height="300px"
+                                  language={language.toLowerCase()}
+                                  theme="vs-dark"
+                                  value={field.value}
+                                  onChange={field.onChange}
+                                  options={{
+                                    minimap: { enabled: false },
+                                    fontSize: 14,
+                                    lineNumbers: "on",
+                                    roundedSelection: false,
+                                    scrollBeyondLastLine: true,
+                                    automaticLayout: true,
+                                    suggestOnTriggerCharacters: true,
+                                    wordBasedSuggestions: true,
+                                  }}
+                                />
+                              )}
+                            />
+                          </div>
+                          {errors.referenceSolutions?.[language] && (
+                            <span className="text-error text-sm mt-2 block">
                               {errors.referenceSolutions[language].message}
                             </span>
-                          </div>
-                        )}
+                          )}
+                        </div>
                       </div>
                     </div>
 
-                    {/* Examples */}
+                    {/* Example Section */}
                     <div className="card bg-base-100 shadow-md">
                       <div className="card-body p-4 md:p-6">
                         <h4 className="font-semibold text-base md:text-lg mb-4">
                           Example
                         </h4>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                           <div className="form-control">
-                            <label className="label">
-                              <span className="label-text font-medium">
-                                Input
-                              </span>
-                            </label>
+                            <label className="label font-medium">Input</label>
                             <textarea
                               className="textarea textarea-bordered min-h-20 w-full p-3 resize-y"
                               {...register(`examples.${language}.input`)}
                               placeholder="Example input"
                             />
                             {errors.examples?.[language]?.input && (
-                              <label className="label">
-                                <span className="label-text-alt text-error">
-                                  {errors.examples[language].input.message}
-                                </span>
-                              </label>
+                              <span className="text-error text-sm mt-1">
+                                {errors.examples[language].input.message}
+                              </span>
                             )}
                           </div>
                           <div className="form-control">
-                            <label className="label">
-                              <span className="label-text font-medium">
-                                Output
-                              </span>
-                            </label>
+                            <label className="label font-medium">Output</label>
                             <textarea
                               className="textarea textarea-bordered min-h-20 w-full p-3 resize-y"
                               {...register(`examples.${language}.output`)}
                               placeholder="Example output"
                             />
                             {errors.examples?.[language]?.output && (
-                              <label className="label">
-                                <span className="label-text-alt text-error">
-                                  {errors.examples[language].output.message}
-                                </span>
-                              </label>
+                              <span className="text-error text-sm mt-1">
+                                {errors.examples[language].output.message}
+                              </span>
                             )}
                           </div>
                           <div className="form-control md:col-span-2">
-                            <label className="label">
-                              <span className="label-text font-medium">
-                                Explanation
-                              </span>
+                            <label className="label font-medium">
+                              Explanation
                             </label>
                             <textarea
                               className="textarea textarea-bordered min-h-24 w-full p-3 resize-y"

@@ -2,9 +2,18 @@ import React, { useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Code, Eye, EyeOff, Loader2, Lock, Mail, User } from "lucide-react";
+import {
+  BracesIcon,
+  Code,
+  Eye,
+  EyeOff,
+  Loader2,
+  Lock,
+  Mail,
+  User,
+} from "lucide-react";
 import { AuthImagePattern } from "../components";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthStore";
 
 const SignUpSchema = z.object({
@@ -19,7 +28,7 @@ const SignUpPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showCnfPassword, setShowCnfPassword] = useState(false);
 
-  const {signup, isSigningUp } =useAuthStore()
+  const { signup, isSigningUp } = useAuthStore();
 
   const {
     register,
@@ -31,26 +40,24 @@ const SignUpPage = () => {
 
   const onSubmit = async (data) => {
     try {
-      await signup(data)
+      await signup(data);
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   };
   return (
-    <div className="h-screen w-screen grid lg:grid-cols-2">
+    <div className="w-screen grid lg:grid-cols-2">
       <div className="flex flex-col justify-center items-center p-6 sm:p-12">
         <div className="w-full max-w-md space-y-5">
           {/* Logo */}
           <div className="text-center mb-8">
             <div className="flex flex-col items-center gap-2 group">
-              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                <Code className="w-6 h-6 text-primary" />
-              </div>
+            
               <h1 className="text-2xl font-bold mt-2">Welcome </h1>
               <p className="text-base-content/60">Sign Up to your account</p>
             </div>
           </div>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-2">
             {/* name */}
             <div className="form-control">
               <label className="label">
@@ -212,8 +219,12 @@ const SignUpPage = () => {
               )}
             </button>
 
-            <p>Already registered? <Link className="text-blue-500" to={"/signin"}>Sign In</Link></p>
-
+            <p>
+              Already registered?{" "}
+              <Link className="text-blue-500" to={"/signin"}>
+                Sign In
+              </Link>
+            </p>
           </form>
         </div>
       </div>

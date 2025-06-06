@@ -329,10 +329,12 @@ const logout = asyncHandler(async (req, res) => {
   const refreshToken = req.cookies?.refreshToken;
 
   if (!refreshToken) {
-    return res.status(404).json(new ApiResponse(404, "User logged out already"));
+    return res
+      .status(404)
+      .json(new ApiResponse(404, "User logged out already"));
   }
 
-  await db.refreshToken.delete({
+  await db.refreshToken.deleteMany({
     where: { token: refreshToken },
   });
 
@@ -402,28 +404,32 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
     where: { id: decoded.id },
   });
 
+  if (!existingUser) {
+    throw new ApiError(404, "User not found. Please register again.");
+  }
+
   const storedToken = await db.refreshToken.findUnique({
     where: { token: incomingRefreshToken },
   });
 
-  if (
+  const isTokenInvalid =
     !storedToken ||
     storedToken.userId !== decoded.id ||
-    storedToken.expiresAt < new Date()
-  ) {
-    throw new ApiError(403, "Refresh token mismatch, expired or not found");
-  }
+    storedToken.expiresAt < new Date();
 
+  if (isTokenInvalid) {
+    throw new ApiError(403, "Refresh token is invalid or expired.");
+  }
 
   const newAccessToken = generateAccessToken({
     id: existingUser.id,
     email: existingUser.email,
     username: existingUser.username,
   });
-  
+
   const newRefreshToken = generateRefreshToken({ id: existingUser.id });
 
-  await db.refreshToken.delete({
+  await db.refreshToken.deleteMany({
     where: { token: incomingRefreshToken },
   });
 
@@ -434,7 +440,6 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
       expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
     },
   });
-
 
   const response = new ApiResponse(200, "Access token refreshed successfully");
 

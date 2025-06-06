@@ -1,4 +1,4 @@
-import { Code, Terminal, FileCode, Braces } from "lucide-react";
+import { Code, Terminal, FileCode, Braces, Code2Icon, BracesIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const CodeBackground = ({ title, subtitle }) => {
@@ -65,32 +65,38 @@ function reverseList(head) {
   }, [codeSnippets.length]);
 
   return (
-    <div className="hidden lg:flex flex-col items-center justify-center bg-slate-900 text-white p-12 relative overflow-hidden">
+    <div className="hidden md:flex flex-col items-center justify-center bg-amber-950 backdrop-blur-3xl min-h-96 text-white py-12 relative overflow-hidden">
+      <div className="text-amber-400 my-10 font-bold text-4xl inline-flex justify-center items-center">
+        C<BracesIcon size={32} />
+        DE SC
+        <BracesIcon size={32} />
+        RE
+      </div>
       {/* Animated code symbols in background */}
-      <div className="absolute inset-0 opacity-10">
+      <div className="absolute inset-0 opacity-25">
         <div className="absolute top-[10%] left-[15%] animate-pulse">
           <Braces size={40} />
         </div>
-        <div className="absolute top-[30%] left-[80%] animate-pulse delay-300">
+        <div className="absolute top-[15%] left-[80%] animate-pulse delay-300">
           <FileCode size={50} />
         </div>
-        <div className="absolute top-[70%] left-[20%] animate-pulse delay-700">
+        <div className="absolute top-[40%] left-[3%] animate-pulse delay-700">
           <Terminal size={45} />
         </div>
-        <div className="absolute top-[60%] left-[75%] animate-pulse delay-500">
+        <div className="absolute top-[90%] left-[80%] animate-pulse delay-500">
           <Code size={55} />
         </div>
-        <div className="absolute top-[85%] left-[45%] animate-pulse delay-200">
+        <div className="absolute top-[90%] left-[45%] animate-pulse delay-200">
           <Braces size={35} />
         </div>
-        <div className="absolute top-[15%] left-[60%] animate-pulse delay-100">
+        <div className="absolute top-[55%] left-[92%] animate-pulse delay-100">
           <Terminal size={30} />
         </div>
       </div>
 
-      <div className="z-10 max-w-md flex flex-col items-center">
+      <div className="z-10 flex flex-col items-center">
         {/* Code editor mockup */}
-        <div className="w-full bg-slate-800 rounded-lg shadow-xl mb-8 overflow-hidden">
+        <div className="w-full bg-slate-950 rounded-lg shadow-2xl mb-8 overflow-hidden">
           {/* Editor header */}
           <div className="bg-slate-700 px-4 py-2 flex items-center">
             <div className="flex space-x-2 mr-4">
@@ -102,22 +108,17 @@ function reverseList(head) {
           </div>
 
           {/* Code content */}
-          <div className="p-4 font-mono text-xs sm:text-sm overflow-hidden relative h-64">
+          <div className="p-4 font-mono text-xs sm:text-sm overflow-hidden relative h-80 min-w-lg">
             <pre className="whitespace-pre-wrap text-green-400 transition-opacity duration-1000">
               {codeSnippets[activeIndex]}
             </pre>
 
             {/* Blinking cursor */}
-            <div className="absolute bottom-4 right-4 w-2 h-4 bg-white animate-blink"></div>
+            <div className="absolute bottom-4 right-4 w-1 h-4 bg-white animate-ping"></div>
           </div>
         </div>
 
         {/* Logo */}
-        <div className="flex items-center justify-center mb-6">
-          <div className="w-12 h-12 rounded-xl bg-primary/10  flex items-center justify-center">
-            <Code className="w-6 h-6 text-primary" />
-          </div>
-        </div>
 
         {/* Text content */}
         <h2 className="text-2xl font-bold mb-4 text-center">{title}</h2>
