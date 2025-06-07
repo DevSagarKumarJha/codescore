@@ -8,13 +8,15 @@
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon src/index.js",
+    "build": "mkdir -p dist && cp -r src/* dist"
   },
   "devDependencies": {
-    "nodemon": "^3.1.10"
+    "nodemon": "^3.1.10",
+    "prisma": "^6.9.0"
   },
   "dependencies": {
-    "@prisma/client": "^6.7.0",
+    "@prisma/client": "^6.9.0",
     "axios": "^1.9.0",
     "bcryptjs": "^3.0.2",
     "cookie-parser": "^1.4.7",
@@ -27,7 +29,6 @@
     "mailgen": "^2.0.29",
     "multer": "^2.0.0",
     "nodemailer": "^7.0.3",
-    "prisma": "^6.7.0",
     "resend": "^4.5.1"
   }
 }

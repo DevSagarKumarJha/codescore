@@ -24,7 +24,7 @@ problemRoutes.get("/get-all-problems", authMiddleware, getAllProblems);
 problemRoutes.get("/get-problem/:id", authMiddleware, getProblemByID);
 
 problemRoutes.get(
-  "/get-solved-problems",
+  "/solved-by-user",
   authMiddleware,
   getProblemSolvedByUser
 );

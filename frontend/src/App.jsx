@@ -10,24 +10,29 @@ import {
   HomePage,
   LoginPage,
   SignUpPage,
+  ProblemsPage,
+  ProblemPage,
+  PlaylistListPage,
+  PlaylistDetailsPage,
+  ProfilePage,
+  LeaderboardPage,
+  MyProfilePage,
 } from "./pages";
 
 import Layout from "./layout/Layout";
 import AdminRoute from "./components/ProtectedRoutes/AdminRoute";
-import AuthRoute from "./components/ProtectedRoutes/AuthRoute";
-import ProblemPage from "./pages/ProblemPage";
 
 const App = () => {
-  const { checkAuth, isCheckingAuth } = useAuthStore();
+  const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
 
   useEffect(() => {
     checkAuth(); // ensures auth status is refreshed
-  }, [checkAuth]);
+  }, []); // run once on mount
 
   if (isCheckingAuth) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <Loader className="size-10 animate-spin" />
+        <Loader size={40} className="animate-spin" />
       </div>
     );
   }
@@ -37,32 +42,46 @@ const App = () => {
       <Toaster />
       <Routes>
         <Route path="/" element={<Layout />}>
-          {/* ✅ Public Routes */}
+          {/* Public Routes */}
           <Route index element={<HomePage />} />
-          <Route path="signup" element={<SignUpPage />} />
-          <Route path="signin" element={<LoginPage />} />
+          <Route
+            path="/signup"
+            element={
+              authUser === null ? <SignUpPage /> : <Navigate to="/problems" />
+            }
+          />
+          <Route
+            path="/signin"
+            element={
+              authUser === null ? <LoginPage /> : <Navigate to="/problems" />
+            }
+          />
           <Route
             path="/problems"
-            element={
-              <AuthRoute>
-                <ProblemPage />
-              </AuthRoute>
-            }
+            element={authUser !== null ? <ProblemsPage /> : <Navigate to="/" />}
           />
-
           <Route
-            path="verify/:token"
-            element={
-              <AuthRoute>
-                <EmailVerificationPage />
-              </AuthRoute>
-            }
+            path="/problem/:id"
+            element={authUser !== null ? <ProblemPage /> : <Navigate to="/" />}
           />
 
-          {/* ✅ Admin Routes */}
+          <Route path="/verify/:token" element={<EmailVerificationPage />} />
+          <Route path="/playlists" element={<PlaylistListPage />} />
+          <Route
+            path="/playlists/:playlistId"
+            element={<PlaylistDetailsPage />}
+          />
+          <Route path="/my-profile" element={authUser !==null ?<MyProfilePage /> : <Navigate to={"/"}/>} />
+          <Route path="/profile/:username" element={<ProfilePage />} />
+          <Route path="/leaderboard" element={<LeaderboardPage />} />
+
+          {/* Admin Routes */}
           <Route element={<AdminRoute />}>
             <Route path="add-problem" element={<AddProblemPage />} />
           </Route>
+
+          {/* Catch all */}
+          <Route path="*" element={<div>404 Not Found</div>} />
         </Route>
       </Routes>
     </div>

@@ -6,7 +6,60 @@ import {
 } from "../libs/judge0.lib.js";
 import { db } from "../libs/db.js";
 
-const executeCode = asyncHandler(async (req, res) => {
+const runCode = asyncHandler(async (req, res) => {
+  const { source_code, language_id, stdin, expected_outputs } = req.body;
+
+  // Validate test cases
+  if (
+    !Array.isArray(stdin) ||
+    stdin.length === 0 ||
+    !Array.isArray(expected_outputs) ||
+    expected_outputs.length !== stdin.length
+  ) {
+    return res.status(400).json({ error: "Invalid or Missing test cases" });
+  }
+
+  // Prepare submissions for Judge0
+  const submissions = stdin.map((input) => ({
+    source_code,
+    language_id,
+    stdin: input,
+  }));
+
+  // Submit to Judge0 and get tokens
+  const submitResponse = await submitBatch(submissions);
+  const tokens = submitResponse.map((res) => res.token);
+
+  // Poll results
+  const results = await pollBatchResults(tokens);
+
+  // Prepare detailed response
+  const detailedResults = results.map((result, i) => {
+    const stdout = result.stdout?.trim();
+    const expected_output = expected_outputs[i]?.trim();
+    const passed = stdout === expected_output;
+
+    return {
+      testCase: i + 1,
+      passed,
+      stdout,
+      expected: expected_output,
+      stderr: result.stderr || null,
+      compile_output: result.compile_output || null,
+      status: result.status.description,
+      memory: result.memory ? `${result.memory} KB` : undefined,
+      time: result.time ? `${result.time} s` : undefined,
+    };
+  });
+
+  res.status(200).json({
+    success: true,
+    message: "Code Executed Successfully",
+    results: detailedResults,
+  });
+});
+
+const submitCode = asyncHandler(async (req, res) => {
   const { source_code, language_id, stdin, expected_outputs, problemId } =
     req.body;
 
@@ -137,4 +190,4 @@ const executeCode = asyncHandler(async (req, res) => {
   });
 });
 
-export default executeCode;
+export  {submitCode, runCode};

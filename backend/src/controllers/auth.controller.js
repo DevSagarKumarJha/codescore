@@ -86,7 +86,7 @@ const register = asyncHandler(async (req, res) => {
   await db.refreshToken.create({
     data: {
       token: refreshToken,
-      userId: user.id,
+      userId: newUser.id,
       expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
     },
   });
@@ -354,10 +354,10 @@ const logout = asyncHandler(async (req, res) => {
 });
 
 const getUserProfile = asyncHandler(async (req, res) => {
-  const { userName } = req.params;
+  const { username } = req.params;
 
   const user = await db.user.findFirst({
-    where: { username: userName },
+    where: { username:username },
     select: {
       id: true,
       name: true,
@@ -368,6 +368,8 @@ const getUserProfile = asyncHandler(async (req, res) => {
       score: true,
     },
   });
+
+  if(!user) return res.status(404).json("user not found")
 
   const response = new ApiResponse(200, "User profile fetched successfully", {
     user,
@@ -459,7 +461,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
 });
 
 const getAllUsers = asyncHandler(async (req, res) => {
-  const { page = 1, limit = 10, search = "" } = req.query;
+  const { page = 1, limit = 50, search = "" } = req.query;
 
   const skip = (page - 1) * limit;
 

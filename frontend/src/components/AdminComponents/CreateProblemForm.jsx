@@ -569,7 +569,7 @@ const CreateProblemForm = () => {
   const onSubmit = async (value) => {
     try {
       setIsLoading(true);
-      const res = await axiosInstance.post("/problem/create-problem", value);
+      const res = await axiosInstance.post("/problems/create-problem", value);
       console.log(res.data);
       toast.success(res.data.message || "Problem Created successfully⚡");
       navigation("/");
@@ -1021,8 +1021,11 @@ const CreateProblemForm = () => {
               </div>
             </div>
 
-            <div className="card-actions justify-end pt-4 border-t">
-              <button type="submit" className="btn btn-primary btn-lg gap-2">
+            <div className="card-actions justify-end pt-4 border-t ">
+              <button
+                type="submit"
+                className="btn btn-primary z-10 cursor-pointer btn-lg gap-2"
+              >
                 {isLoading ? (
                   <span className="loading loading-spinner text-white"></span>
                 ) : (

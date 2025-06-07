@@ -79,7 +79,7 @@ export const addProblemToPlaylist = asyncHandler(async (req, res) => {
 
   const problemsInPlaylist = await db.problemsInPlaylist.createMany({
     data: problemIds.map((problemId) => ({
-      playlistId,
+      playListId:playlistId,
       problemId,
     })),
   });

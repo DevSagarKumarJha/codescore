@@ -95,12 +95,12 @@ const Navbar = () => {
               {isDropdownOpen && (
                 <ul className="absolute right-0 mt-2 z-[1] p-2 shadow bg-base-100 rounded-box w-52 space-y-3">
                   <li>
-                    <p className="text-base font-semibold">{authUser.name}</p>
+                    <p className="text-base font-semibold">{authUser?.name}</p>
                     <hr className="border-gray-200/10" />
                   </li>
                   <li>
                     <Link
-                      to="/profile"
+                      to="/my-profile"
                       className="flex items-center gap-2 hover:bg-primary hover:text-white p-2 rounded"
                     >
                       <User className="w-4 h-4" />

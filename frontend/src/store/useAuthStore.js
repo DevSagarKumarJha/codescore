@@ -13,8 +13,13 @@ export const useAuthStore = create((set) => ({
     set({ isCheckingAuth: true });
     try {
       const res = await axiosInstance.get("/auth/check");
-      set({ authUser: res.data.data.user, isCheckingAuth: false});
+
+
+      const user = res.data?.data?.user ?? res.data?.User ?? null;
+      toast.success(res.data.message);
+      set({ authUser: user, isCheckingAuth: false });
     } catch (error) {
+      toast.error("Error checking user");
       set({ authUser: null, isCheckingAuth: false });
     }
   },
